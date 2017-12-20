@@ -142,8 +142,8 @@ namespace Parcing.Parcers
                     review.SitePath = BuildPathString(doc);
                     BuildRevData(doc, ref review);
                     review.Name = doc.DocumentNode.SelectSingleNode("//*[@id=\"main_content\"]/div/div/div/div/div[4]/h1").InnerText;
-                    review.Pluses = doc.DocumentNode.SelectSingleNode("//*[@id=\"main_content\"]/div/div/div/div/div[4]/div[2]").InnerText;
-                    review.Minuses = doc.DocumentNode.SelectSingleNode("//*[@id=\"main_content\"]/div/div/div/div/div[4]/div[3]").InnerText;
+                    review.Pluses = doc.DocumentNode.SelectSingleNode("//*[@class=\"pro\"]/br").InnerText;
+                    review.Minuses = doc.DocumentNode.SelectSingleNode("//*[@class=\"contra\"]/br").InnerText;
                     GetRevText(doc, ref review);
                     GetRevRating(doc, ref review);
                     Program.jsonWriter.Write(review);

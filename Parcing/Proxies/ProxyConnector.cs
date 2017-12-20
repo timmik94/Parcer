@@ -13,7 +13,7 @@ namespace Parcing.Proxies
         public List<ProxyVM> proxies;
         int errors=0;
         private int currentproxy;
-
+        private int iteration=0;
         public ProxyConnector() { }
 
         public ProxyConnector(List<ProxyVM> prox)
@@ -31,7 +31,9 @@ namespace Parcing.Proxies
                 {
                     item.usable = true;
                     errors = 0;
+                    iteration++;
                 }
+                currentproxy = 0;
             }
                 if (currentproxy >= proxies.Count)
                 {
@@ -40,7 +42,7 @@ namespace Parcing.Proxies
                 var curr = proxies[currentproxy];
 
                 currentproxy++;
-                if (curr.usable)
+                if (curr.usable&&iteration<=2||(curr.usable&&(iteration>2)&&(curr.UseTime!=0)))
                 {
                     return curr;
                 }
@@ -64,9 +66,13 @@ namespace Parcing.Proxies
                     
                     HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                     req.Timeout = 2000;
-                    req.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36 OPR/49.0.2725.47";
-                    req.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
-                   // req.Proxy = new  WebProxy(curr.ip,curr.Port);
+                    req.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0";
+                    //req.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
+                    req.Proxy = new  WebProxy("http://"+curr.ip+":"+curr.Port+"/");
+                    req.Accept = "text/html";
+                    req.KeepAlive = false;
+                    req.MaximumAutomaticRedirections = 50;
+                    //req.
                     HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
                     var doc = new HtmlDocument();
                     doc.Load(resp.GetResponseStream());
