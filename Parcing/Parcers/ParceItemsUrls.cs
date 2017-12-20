@@ -46,13 +46,6 @@ namespace Parcing.Parcers
         
         }
 
-        void ParcePAgeSel()
-        {
-            IWebDriver driver = new OperaDriver("operadriver_win64");
-            
-            //driver.
-        }
-
         public void ParceArea()
         {
            

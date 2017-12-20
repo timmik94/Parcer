@@ -25,7 +25,7 @@ namespace Parcing
             BuildProxies();
 
          
-            jsonWriter = new FileJsonWriter(100, "Rev");
+           
 
             Console.WriteLine("Input baseURL");
             string URL = Console.ReadLine();
@@ -35,7 +35,12 @@ namespace Parcing
 
             Console.Write("Input last page:");
             int last = int.Parse(Console.ReadLine());
-          
+
+            Console.WriteLine("OutputDirName:");
+            string outdir = Console.ReadLine();
+
+            jsonWriter = new FileJsonWriter(100, "Rev",outdir);
+
             ParceItemsUrls parcer = new ParceItemsUrls(URL,last,first );
             parcer.ParceArea();
 

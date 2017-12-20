@@ -11,11 +11,13 @@ namespace Parcing.Models
         List<Review> ToWrite;
         int filenumber;
         public string fileprefix = "";
+        public string outdir;
         public int inOneFile;
         int k =0;
 
-        public FileJsonWriter(int inone,string prefix)
+        public FileJsonWriter(int inone,string prefix,string outd)
         {
+            outdir = outd;
             fileprefix = prefix;
             inOneFile = inone;
             ToWrite = new List<Review>();
@@ -42,7 +44,8 @@ namespace Parcing.Models
 
         void WriteFile()
         {
-            string fileName = fileprefix + filenumber.ToString() + ".json";
+            if (!Directory.Exists(outdir)) { Directory.CreateDirectory(outdir); }
+            string fileName =outdir+"/"+ fileprefix + filenumber.ToString() + ".json";
             StreamWriter streamWriter =new StreamWriter(File.Create(fileName));
             streamWriter.Write( JsonConvert.SerializeObject(ToWrite));
             streamWriter.Close();
