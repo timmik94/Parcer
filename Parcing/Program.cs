@@ -71,6 +71,7 @@ namespace Parcing
                 };
                 proxyConnector.AddProxy(vm);
             }
+            sr.Close();
 
         }
     }

@@ -27,22 +27,26 @@ namespace Parcing.Parcers
 
        public void PArcePage(int pagenum)
        {
-         
-            string fullURL = mainURL + $"{pagenum}/";
-            var doc = Program.proxyConnector.Connect(fullURL);
-       
-            var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"main_content\"]/div[4]/table/tr/td[2]/h3/a");
-           
-            foreach(var node in nodes)
+
+            try
             {
-               string itemurl=node.GetAttributeValue("href", "NOT_HREF");
-                if (Uri.IsWellFormedUriString(itemurl, UriKind.Absolute))
+                string fullURL = mainURL + $"{pagenum}/";
+                var doc = Program.proxyConnector.Connect(fullURL);
+
+                var nodes = doc.DocumentNode.SelectNodes("//*[@id=\"main_content\"]/div[4]/table/tr/td[2]/h3/a");
+
+                foreach (var node in nodes)
                 {
-                   
-                    ParceReviewUrls parceRevURL = new ParceReviewUrls();
-                    parceRevURL.GetRevUrls(itemurl);
+                    string itemurl = node.GetAttributeValue("href", "NOT_HREF");
+                    if (Uri.IsWellFormedUriString(itemurl, UriKind.Absolute))
+                    {
+
+                        ParceReviewUrls parceRevURL = new ParceReviewUrls();
+                        parceRevURL.GetRevUrls(itemurl);
+                    }
                 }
             }
+            catch { Console.WriteLine("Incorrect format.");PArcePage(pagenum); }
         
         }
 
@@ -51,9 +55,11 @@ namespace Parcing.Parcers
            
             for(int curr = currpage; curr <= maxpage; curr++)
             {
-                
-                PArcePage(currpage);
-                
+                try
+                {
+                    PArcePage(currpage);
+                }
+                catch { Console.WriteLine("Page is missing"); }
             }
             Console.WriteLine("ParcedAll");
         } 
