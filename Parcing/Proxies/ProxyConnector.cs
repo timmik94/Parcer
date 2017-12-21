@@ -54,7 +54,6 @@ namespace Parcing.Proxies
             {
                 NextIteration();
             }
-
             ProxyVM curr = null;
             bool hasProxy = false;
             do
