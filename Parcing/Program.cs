@@ -23,8 +23,7 @@ namespace Parcing
         static void Main(string[] args)
         {
             BuildProxies();
-
-         
+       
            
 
             Console.WriteLine("Input baseURL");

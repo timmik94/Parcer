@@ -58,6 +58,7 @@ namespace Parcing.Parcers
                 try
                 {
                     PArcePage(currpage);
+                    Console.WriteLine($"Page {currpage} parced");
                 }
                 catch { Console.WriteLine("Page is missing"); }
             }

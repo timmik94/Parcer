@@ -16,7 +16,7 @@ namespace Parcing.Proxies
         public void DoReady()
         {
             
-                if (DateTime.Now.Ticks - UseTime < 10000)
+                if (DateTime.Now.Ticks - UseTime < 25000)
                 {
                     Thread.Sleep((int)(DateTime.Now.Ticks - UseTime));
                 }

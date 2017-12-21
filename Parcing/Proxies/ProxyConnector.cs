@@ -37,11 +37,12 @@ namespace Parcing.Proxies
 
         private void NextIteration()
         {
+            errors = 0;
+            iteration++;
             foreach (var item in proxies)
             {
                 item.usable = true;
-                errors = 0;
-                iteration++;
+               
                 //if (iteration > 300) { iteration = 0; }
             }
             currentproxy = 0;
@@ -85,6 +86,7 @@ namespace Parcing.Proxies
                     curr.DoReady();
                     HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                     req.Timeout = 2000;
+                   
                     req.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0";
                     //req.AuthenticationLevel = System.Net.Security.AuthenticationLevel.None;
                     req.Proxy = new WebProxy("http://" + curr.ip + ":" + curr.Port + "/");
@@ -104,7 +106,7 @@ namespace Parcing.Proxies
                 }
                 catch (WebException e) { Console.WriteLine(e.Message + errors.ToString() + ":" + currentproxy.ToString()); curr.usable = false; errors++; /*Console.WriteLine(errors);*/ }
                 curr = GetNext();
-                if (errors > proxies.Count) { break; }
+            //    if (errors > proxies.Count) { break; }
                 //catch(Exception e1) { if (e1.Message == "ProxiesEnds") { Console.WriteLine("Stop"); break; } }
             } while (!f);
             return null;
